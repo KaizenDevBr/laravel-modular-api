@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\File;
+
+class ModuleServiceProvider extends ServiceProvider
+{
+  /**
+   * O "ModuleServiceProvider" é responsável por escanear e registrar automaticamente
+   * os Service Providers de cada módulo, evitando a necessidade de adicionar manualmente cada um deles aqui.
+   */
+  public function register(): void
+  {
+    $modulesPath = app_path('Http/Modules');
+
+    if (!File::isDirectory($modulesPath)) {
+      return;
+    }
+
+    $modules = File::directories($modulesPath);
+
+    foreach ($modules as $module) {
+      $moduleName = basename($module);
+
+      // Registrando automaticamente os Service Providers do módulo
+      $serviceProviderClass = "App\\Http\\Modules\\{$moduleName}\\Providers\\{$moduleName}ServiceProvider"; // O nome do arquivo de "ServiceProvider" de cada módulo deve obrigatoriamente ter o formato: "NomeDoModuloServiceProvider"
+      $repositoryProviderClass = "App\\Http\\Modules\\{$moduleName}\\Providers\\{$moduleName}RepositoryProvider"; // O nome do arquivo de "RepositoryProvider" de cada módulo deve obrigatoriamente ter o formato: "NomeDoModuloRepositoryProvider"
+
+      if (class_exists($serviceProviderClass)) {
+        $this->app->register($serviceProviderClass);
+      }
+
+      if (class_exists($repositoryProviderClass)) {
+        $this->app->register($repositoryProviderClass);
+      }
+    }
+  }
+
+  public function boot(): void
+  {
+    $modulesPath = app_path('Http/Modules');
+
+    if (!File::isDirectory($modulesPath)) {
+      return;
+    }
+
+    $modules = File::directories($modulesPath);
+
+    foreach ($modules as $module) {
+      $migrationsPath = $module . '/Migrations';
+
+      if (File::isDirectory($migrationsPath)) {
+        $this->loadMigrationsFrom($migrationsPath);
+      }
+    }
+
+    // Configurando a resolução de Factories para os módulos customizados
+    Factory::guessFactoryNamesUsing(function (string $modelName) {
+      if (str_starts_with($modelName, 'App\\Http\\Modules\\')) {
+        // Ex: App\Http\Modules\Exemplo\Models\Exemplo 
+        // -> App\Http\Modules\Exemplo\Factories\ExemploFactory
+        $parts = explode('\\', $modelName);
+        $moduleName = $parts[3];
+        $model = end($parts);
+        return "App\\Http\\Modules\\{$moduleName}\\Factories\\{$model}Factory";
+      }
+
+      // Fallback padrão do Laravel para models normais
+      return 'Database\\Factories\\' . class_basename($modelName) . 'Factory';
+    });
+  }
+}

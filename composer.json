@@ -1,0 +1,30 @@
+{
+    "name": "kaizendev/laravel-modular-api",
+    "description": "Uma arquitetura Opinionated de Monolito Modular para APIs Laravel.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KaizenDev",
+            "email": "credentials@kaizen.dev.br"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "illuminate/console": "^11.0|^12.0|^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "KaizenDev\\ModularApi\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "KaizenDev\\ModularApi\\ModularApiServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable"
+}
