@@ -1,6 +1,6 @@
 {
     "name": "kaizendev/laravel-modular-api",
-    "description": "Uma arquitetura Opinionated de Monolito Modular para APIs Laravel.",
+    "description": "An opinionated Modular Monolith scaffolding for Laravel. Transform standard apps into scalable, DDD-oriented Enterprise APIs.",
     "type": "library",
     "license": "MIT",
     "authors": [
