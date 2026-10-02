@@ -231,7 +231,7 @@ Este pacote declara a licença **MIT** em [composer.json](composer.json).
 <div align="center">
   <p>
     Desenvolvido por:<br>
-    <strong>Wanderson Borges | KAIZENDEV</strong><br>
+    <strong>Wanderson Borges | KaizenDev</strong><br>
     <a href="https://kaizen.dev.br">kaizen.dev.br</a> ·
     <a href="mailto:contato@kaizen.dev.br">contato@kaizen.dev.br</a>
   </p>
@@ -464,7 +464,7 @@ This package declares the **MIT** license in [composer.json](composer.json).
 <div align="center">
   <p>
     Developed by:<br>
-    <strong>Wanderson Borges | KAIZENDEV</strong><br>
+    <strong>Wanderson Borges | KaizenDev</strong><br>
     <a href="https://kaizen.dev.br">kaizen.dev.br</a> ·
     <a href="mailto:contato@kaizen.dev.br">contato@kaizen.dev.br</a>
   </p>
