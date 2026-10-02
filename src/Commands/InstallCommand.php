@@ -49,13 +49,30 @@ class InstallCommand extends Command
 
         // 2. Instalar o ModuleServiceProvider
         $this->publishModuleServiceProvider();
+        
+        // 3. Ejetar o arquivo de documentação (KAIZENDEV.md) na raiz
+        $this->publishDocumentation();
 
-        // 3. Questionário (Wizard) para limpeza da arquitetura padrão
+        // 4. Questionário (Wizard) para limpeza da arquitetura padrão
         $this->runCleanupWizard();
 
         $this->info($this->locale === 'pt_BR' 
             ? '🎉 Instalação concluída com sucesso! Você já pode utilizar o comando "php artisan make:module Nome".'
             : '🎉 Installation completed successfully! You can now use "php artisan make:module Name".');
+    }
+
+    /**
+     * Copia o arquivo de documentação para a raiz do projeto.
+     */
+    private function publishDocumentation(): void
+    {
+        $stubPath = __DIR__ . "/../../stubs/{$this->locale}/KAIZENDEV.stub";
+        $destinationPath = base_path('KAIZENDEV.md');
+
+        File::copy($stubPath, $destinationPath);
+        $this->info($this->locale === 'pt_BR' 
+            ? '✅ Arquivo de documentação ejetado em KAIZENDEV.md.'
+            : '✅ Documentation file published to KAIZENDEV.md.');
     }
 
     /**
