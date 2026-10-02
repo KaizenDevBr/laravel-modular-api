@@ -38,7 +38,7 @@ class InstallCommand extends Command
             ['pt_BR' => 'Português do Brasil', 'en_US' => 'English (US)'],
             'pt_BR'
         );
-        $this->locale = $language === 'Português do Brasil' ? 'pt_BR' : 'en_US';
+        $this->locale = ($language === 'Português do Brasil' || $language === 'pt_BR') ? 'pt_BR' : 'en_US';
 
         $this->info($this->locale === 'pt_BR' 
             ? '🚀 Iniciando a instalação da Arquitetura Modular (KaizenDev)...' 
@@ -117,7 +117,7 @@ class InstallCommand extends Command
         $destinationPath = app_path('Providers/ModuleServiceProvider.php');
 
         File::copy($stubPath, $destinationPath);
-        $this->info('✅ ModuleServiceProvider ejetado em app/Providers.');
+        $this->info($this->locale === 'pt_BR' ? '✅ ModuleServiceProvider ejetado em app/Providers.' : '✅ ModuleServiceProvider published to app/Providers.');
 
         // Registrar no bootstrap/providers.php (Laravel 11+)
         $providersFile = base_path('bootstrap/providers.php');
@@ -133,7 +133,7 @@ class InstallCommand extends Command
                     $content
                 );
                 File::put($providersFile, $content);
-                $this->info('✅ ModuleServiceProvider registrado automaticamente em bootstrap/providers.php.');
+                $this->info($this->locale === 'pt_BR' ? '✅ ModuleServiceProvider registrado automaticamente em bootstrap/providers.php.' : '✅ ModuleServiceProvider automatically registered in bootstrap/providers.php.');
             }
         }
     }
