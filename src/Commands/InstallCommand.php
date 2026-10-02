@@ -22,11 +22,27 @@ class InstallCommand extends Command
     protected $description = 'Instala e configura a arquitetura base de Monolito Modular na sua aplicação.';
 
     /**
+     * O idioma selecionado.
+     */
+    protected string $locale = 'pt_BR';
+
+    /**
      * Executa o comando no console.
      */
     public function handle(): void
     {
-        $this->info('🚀 Iniciando a instalação da Arquitetura Modular (KaizenDev)...');
+        $this->line('');
+        $this->info('🌎 Qual o idioma de instalação? / What is the installation language?');
+        $language = $this->choice(
+            'Selecione / Select',
+            ['pt_BR' => 'Português do Brasil', 'en_US' => 'English (US)'],
+            'pt_BR'
+        );
+        $this->locale = $language === 'Português do Brasil' ? 'pt_BR' : 'en_US';
+
+        $this->info($this->locale === 'pt_BR' 
+            ? '🚀 Iniciando a instalação da Arquitetura Modular (KaizenDev)...' 
+            : '🚀 Starting KaizenDev Modular Architecture installation...');
 
         // 1. Instalar a pasta Base (O coração do sistema)
         $this->publishBaseModule();
@@ -37,7 +53,9 @@ class InstallCommand extends Command
         // 3. Questionário (Wizard) para limpeza da arquitetura padrão
         $this->runCleanupWizard();
 
-        $this->info('🎉 Instalação concluída com sucesso! Você já pode utilizar o comando "php artisan make:module Nome".');
+        $this->info($this->locale === 'pt_BR' 
+            ? '🎉 Instalação concluída com sucesso! Você já pode utilizar o comando "php artisan make:module Nome".'
+            : '🎉 Installation completed successfully! You can now use "php artisan make:module Name".');
     }
 
     /**
@@ -45,7 +63,7 @@ class InstallCommand extends Command
      */
     private function publishBaseModule(): void
     {
-        $stubPath = __DIR__ . '/../../stubs/Base';
+        $stubPath = __DIR__ . "/../../stubs/{$this->locale}/Base";
         $destinationPath = app_path('Http/Modules/Base');
 
         if (!File::isDirectory($destinationPath)) {
@@ -53,7 +71,9 @@ class InstallCommand extends Command
         }
 
         File::copyDirectory($stubPath, $destinationPath);
-        $this->info('✅ Módulo Base ejetado em app/Http/Modules/Base.');
+        $this->info($this->locale === 'pt_BR' 
+            ? '✅ Módulo Base ejetado em app/Http/Modules/Base.'
+            : '✅ Base Module published to app/Http/Modules/Base.');
     }
 
     /**
@@ -62,7 +82,7 @@ class InstallCommand extends Command
     private function publishModuleServiceProvider(): void
     {
         // Copiar o arquivo
-        $stubPath = __DIR__ . '/../../stubs/Providers/ModuleServiceProvider.stub';
+        $stubPath = __DIR__ . "/../../stubs/{$this->locale}/Providers/ModuleServiceProvider.stub";
         $destinationPath = app_path('Providers/ModuleServiceProvider.php');
 
         File::copy($stubPath, $destinationPath);
@@ -93,74 +113,84 @@ class InstallCommand extends Command
     private function runCleanupWizard(): void
     {
         $this->line('');
-        $this->warn('--- Limpeza de Arquitetura Padrão (Opcional) ---');
-        $this->line('Para manter sua API puramente modular, você pode excluir os diretórios padrões do Laravel.');
+        $this->warn($this->locale === 'pt_BR' ? '--- Limpeza de Arquitetura Padrão (Opcional) ---' : '--- Default Architecture Cleanup (Optional) ---');
+        $this->line($this->locale === 'pt_BR' 
+            ? 'Para manter sua API puramente modular, você pode excluir os diretórios padrões do Laravel.'
+            : 'To keep your API purely modular, you can delete standard Laravel directories.');
 
-        if ($this->confirm('Deseja excluir a pasta padrão "app/Models"?', true)) {
+        $qModels = $this->locale === 'pt_BR' ? 'Deseja excluir a pasta padrão "app/Models"?' : 'Delete the standard "app/Models" folder?';
+        if ($this->confirm($qModels, true)) {
             if (File::isDirectory(app_path('Models'))) {
                 File::deleteDirectory(app_path('Models'));
-                $this->info('🗑️  Pasta app/Models removida.');
+                $this->info('🗑️  ' . ($this->locale === 'pt_BR' ? 'Pasta app/Models removida.' : 'app/Models folder removed.'));
             }
         }
 
-        if ($this->confirm('Deseja excluir a pasta padrão "app/Http/Controllers"?', true)) {
+        $qControllers = $this->locale === 'pt_BR' ? 'Deseja excluir a pasta padrão "app/Http/Controllers"?' : 'Delete the standard "app/Http/Controllers" folder?';
+        if ($this->confirm($qControllers, true)) {
             if (File::isDirectory(app_path('Http/Controllers'))) {
                 File::deleteDirectory(app_path('Http/Controllers'));
-                $this->info('🗑️  Pasta app/Http/Controllers removida.');
+                $this->info('🗑️  ' . ($this->locale === 'pt_BR' ? 'Pasta app/Http/Controllers removida.' : 'app/Http/Controllers folder removed.'));
             }
         }
 
-        if ($this->confirm('Deseja excluir as migrations padrões (User, Password Resets, etc)?', true)) {
+        $qMigrations = $this->locale === 'pt_BR' ? 'Deseja excluir as migrations padrões (User, etc)?' : 'Delete standard migrations (User, etc)?';
+        if ($this->confirm($qMigrations, true)) {
             $migrationsPath = database_path('migrations');
             if (File::isDirectory($migrationsPath)) {
                 $files = File::files($migrationsPath);
                 foreach ($files as $file) {
                     File::delete($file);
                 }
-                $this->info('🗑️  Migrations padrões removidas.');
+                $this->info('🗑️  ' . ($this->locale === 'pt_BR' ? 'Migrations padrões removidas.' : 'Standard migrations removed.'));
             }
         }
         
-        if ($this->confirm('Deseja excluir as factories padrões (UserFactory, etc)?', true)) {
+        $qFactories = $this->locale === 'pt_BR' ? 'Deseja excluir as factories padrões?' : 'Delete standard factories?';
+        if ($this->confirm($qFactories, true)) {
             $factoriesPath = database_path('factories');
             if (File::isDirectory($factoriesPath)) {
                 $files = File::files($factoriesPath);
                 foreach ($files as $file) {
                     File::delete($file);
                 }
-                $this->info('🗑️  Factories padrões removidas.');
+                $this->info('🗑️  ' . ($this->locale === 'pt_BR' ? 'Factories padrões removidas.' : 'Standard factories removed.'));
             }
         }
 
-        if ($this->confirm('Deseja excluir a pasta padrão "database/seeders" (DatabaseSeeder padrão)?', true)) {
+        $qSeeders = $this->locale === 'pt_BR' ? 'Deseja excluir a pasta padrão "database/seeders"?' : 'Delete the standard "database/seeders" folder?';
+        if ($this->confirm($qSeeders, true)) {
             $seedersPath = database_path('seeders');
             if (File::isDirectory($seedersPath)) {
                 File::deleteDirectory($seedersPath);
-                $this->info('🗑️  Pasta database/seeders removida.');
+                $this->info('🗑️  ' . ($this->locale === 'pt_BR' ? 'Pasta database/seeders removida.' : 'database/seeders folder removed.'));
             }
         }
 
-        if ($this->confirm('Deseja excluir a pasta padrão "app/Jobs" (caso exista)?', true)) {
+        $qJobs = $this->locale === 'pt_BR' ? 'Deseja excluir a pasta padrão "app/Jobs" (caso exista)?' : 'Delete the standard "app/Jobs" folder?';
+        if ($this->confirm($qJobs, true)) {
             $jobsPath = app_path('Jobs');
             if (File::isDirectory($jobsPath)) {
                 File::deleteDirectory($jobsPath);
-                $this->info('🗑️  Pasta app/Jobs removida.');
+                $this->info('🗑️  ' . ($this->locale === 'pt_BR' ? 'Pasta app/Jobs removida.' : 'app/Jobs folder removed.'));
             }
         }
 
-        if ($this->confirm('Deseja excluir a pasta padrão "app/Http/Requests" (caso exista)?', true)) {
+        $qRequests = $this->locale === 'pt_BR' ? 'Deseja excluir a pasta padrão "app/Http/Requests"?' : 'Delete the standard "app/Http/Requests" folder?';
+        if ($this->confirm($qRequests, true)) {
             $requestsPath = app_path('Http/Requests');
             if (File::isDirectory($requestsPath)) {
                 File::deleteDirectory($requestsPath);
-                $this->info('🗑️  Pasta app/Http/Requests removida.');
+                $this->info('🗑️  ' . ($this->locale === 'pt_BR' ? 'Pasta app/Http/Requests removida.' : 'app/Http/Requests folder removed.'));
             }
         }
 
-        if ($this->confirm('Deseja excluir a pasta padrão "app/Http/Resources" (caso exista)?', true)) {
+        $qResources = $this->locale === 'pt_BR' ? 'Deseja excluir a pasta padrão "app/Http/Resources"?' : 'Delete the standard "app/Http/Resources" folder?';
+        if ($this->confirm($qResources, true)) {
             $resourcesPath = app_path('Http/Resources');
             if (File::isDirectory($resourcesPath)) {
                 File::deleteDirectory($resourcesPath);
-                $this->info('🗑️  Pasta app/Http/Resources removida.');
+                $this->info('🗑️  ' . ($this->locale === 'pt_BR' ? 'Pasta app/Http/Resources removida.' : 'app/Http/Resources folder removed.'));
             }
         }
     }
