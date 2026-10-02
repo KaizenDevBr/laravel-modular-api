@@ -220,7 +220,7 @@ Encontrou um problema ou tem uma ideia para melhorar o pacote? Abra uma issue ne
 Para contribuir com código ou documentação, envie um pull request explicando o problema e a mudança proposta.
 
 - **E-mail para dúvidas e sugestões:** [contato@kaizen.dev.br](mailto:contato@kaizen.dev.br)
-- **Site da KAIZENDEV:** [kaizen.dev.br](https://kaizen.dev.br)
+- **Site:** [kaizen.dev.br](https://kaizen.dev.br)
 
 ## Licença
 
@@ -453,7 +453,7 @@ Found a problem or have an idea to improve the package? Open an issue in this re
 To contribute code or documentation, submit a pull request explaining the problem and the proposed change.
 
 - **Email for questions and suggestions:** [contato@kaizen.dev.br](mailto:contato@kaizen.dev.br)
-- **KAIZENDEV website:** [kaizen.dev.br](https://kaizen.dev.br)
+- **Website:** [kaizen.dev.br](https://kaizen.dev.br)
 
 ## License
 
