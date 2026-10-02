@@ -1,80 +1,239 @@
-# KaizenDev Modular API - Laravel Scaffold
+<a id="portugues" name="portugues"></a>
 
-![Laravel](https://img.shields.io/badge/Laravel-11%2B%20%7C%2012%2B%20%7C%2013%2B-FF2D20?style=for-the-badge&logo=laravel)
-![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&logo=php)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+<p align="right">
+  <a href="#portugues">🇧🇷 Português</a> ·
+  <a href="https://github.com/KaizenDevBr/laravel-modular-api#english">🇺🇸 English</a>
+</p>
 
-Welcome to **KaizenDev Modular API**, an opinionated architectural scaffolding package for Laravel.
-This package transforms the standard Laravel structure into a highly scalable, fully modular Monolith designed for Enterprise APIs.
+<div align="center">
+  <a href="https://kaizen.dev.br">
+    <img src="docs/kaizendev/assets/kaizendev-banner.svg" alt="KaizenDev Modular API — Uma base organizada para construir e evoluir APIs Laravel" width="800">
+  </a>
 
----
+  <p>Monolito modular · Geração de código · Convenções compartilhadas</p>
 
-## 🌟 O que é este pacote? (What is this package?)
+  <p>
+    <img src="https://img.shields.io/badge/Laravel-11%20%7C%2012%20%7C%2013-FF2D20?style=for-the-badge&amp;logo=laravel" alt="Laravel 11, 12 e 13">
+    <img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&amp;logo=php&amp;logoColor=white" alt="PHP 8.2 ou superior">
+    <img src="https://img.shields.io/badge/Licen%C3%A7a-MIT-2EA44F?style=for-the-badge" alt="Licença MIT">
+  </p>
 
-Este pacote foi desenhado para resolver o problema de crescimento desordenado de APIs no Laravel. Em vez de ter dezenas de Controllers e Models misturados nas pastas raízes do framework, nós trazemos o conceito de **Monolito Modular** (Domain Driven Design).
-
-Ao instalar o pacote, sua aplicação ganha um gerador inteligente (`make:module`) que cria módulos auto-contidos. Cada módulo possui sua própria:
-- Controller
-- Model
-- Service (com Interface)
-- Repository (com Interface)
-- Requests (Store, Update, Index)
-- Resources
-- Factories, Seeders, Jobs, Exports e Migrations
-
-Tudo isso sendo injetado dinamicamente no sistema sem que você precise registrar nenhuma classe manualmente!
-
----
-
-## 🚀 Como Funciona a Mágica? (How it works)
-
-O coração do pacote é o `ModuleServiceProvider`. Ele faz a leitura dinâmica da pasta `app/Http/Modules/` e registra automaticamente todos os *Bindings* de injeção de dependência (Interfaces de Repositórios e Serviços), além de carregar suas *Migrations* de forma isolada.
-
-A comunicação da API é padronizada pelo `BaseTrait`, garantindo respostas JSON perfeitas e consistentes (sucesso, erro com validações) em toda a aplicação.
+  <p>
+    <a href="#instalacao">Instalação</a> ·
+    <a href="#arquitetura">Arquitetura</a> ·
+    <a href="#contato">Contato</a>
+  </p>
+</div>
 
 ---
 
-## 💻 Passo a Passo de Instalação (Installation Guide)
+## 🇧🇷 APIs organizadas por domínio
 
-### 1. Requerendo o Pacote
-No terminal da sua aplicação Laravel (recém-criada ou existente), execute:
+O **KaizenDev Modular API** é um pacote de scaffolding para aplicações Laravel. Ele organiza o código em módulos de negócio dentro de `app/Http/Modules`, com uma base compartilhada e separação entre entrada HTTP, regras de negócio e acesso a dados.
+
+A proposta é dar um ponto de partida consistente para o projeto: cada módulo reúne suas classes, enquanto o Laravel continua sendo responsável pela execução da aplicação. Você gera a estrutura e adapta o código às necessidades do seu domínio.
+
+### O que o pacote entrega
+
+| Recurso | Na prática |
+| --- | --- |
+| **Instalação interativa** | Publica a base da arquitetura e permite escolher os arquivos de apoio em português ou inglês. |
+| **Gerador de módulos** | Cria controllers, models, services, repositories, interfaces e arquivos auxiliares com um comando. |
+| **Providers por módulo** | Descobre e registra os providers de serviços e repositórios seguindo as convenções de nomes. |
+| **Migrations por módulo** | Carrega as migrations de cada módulo para os comandos Artisan do Laravel. |
+| **Base compartilhada** | Fornece classes base e helpers para respostas JSON com `success`, `message`, `data` e `status`. |
+| **Código na aplicação** | Publica os arquivos base no seu projeto para que você possa ler, adaptar e versionar. |
+
+> [!NOTE]
+> A organização modular pode apoiar uma modelagem orientada a domínio. As regras, os limites e a comunicação entre os módulos são decisões do seu projeto.
+
+<a id="instalacao" name="instalacao"></a>
+
+## Comece por aqui
+
+### 1. Instale o pacote
+
+No diretório de uma aplicação Laravel, execute:
+
 ```bash
 composer require kaizendev/laravel-modular-api
 ```
 
-### 2. Rodando o Wizard de Instalação
-Inicie a configuração mágica rodando:
+Os requisitos declarados em [composer.json](https://github.com/KaizenDevBr/laravel-modular-api/blob/main/composer.json) são **PHP `^8.2`** e componentes Illuminate **`^11.0`, `^12.0` ou `^13.0`**. A aplicação também precisa atender aos requisitos da versão do Laravel utilizada.
+
+### 2. Prepare a arquitetura
+
+> [!WARNING]
+> Execute o instalador com suas alterações versionadas ou com um backup. A limpeza opcional pode excluir pastas inteiras de models, controllers, requests, resources, jobs e seeders, além de **todos os arquivos diretamente em `database/migrations` e `database/factories`**. As confirmações de exclusão têm **“sim” como padrão**: escolha “não” para preservar o que já existe.
+
 ```bash
 php artisan modular:install
 ```
 
-Durante a instalação, o Wizard fará perguntas interativas (em Português ou Inglês, conforme sua escolha). Ele perguntará se você deseja excluir pastas padrões do Laravel (como `app/Models` e `app/Http/Controllers`) para garantir a pureza da arquitetura modular.
+O assistente permite selecionar **Português do Brasil** ou **English (US)** e:
 
-### 3. Criando seu primeiro Módulo!
-Após a instalação, a fundação estará criada em `app/Http/Modules/Base`.
-Agora, para gerar recursos reais de negócio, basta rodar:
+1. Publica o módulo `Base` em `app/Http/Modules/Base`.
+2. Copia o `ModuleServiceProvider` para `app/Providers` e o registra em `bootstrap/providers.php`, quando esse arquivo existe.
+3. Publica o guia `KAIZENDEV.md` na raiz da aplicação e suas imagens em `docs/kaizendev/assets`.
+4. Pergunta quais partes da estrutura padrão você deseja remover.
+
+<details>
+<summary><strong>Vai instalar em um projeto existente ou executar novamente?</strong></summary>
+
+O instalador copia os arquivos base, o provider, a documentação e suas imagens para a aplicação. Uma nova execução pode sobrescrever personalizações nesses arquivos.
+
+Revise as mudanças antes de continuar e preserve pastas usadas por autenticação, rotas ou outras funcionalidades existentes. A limpeza de migrations e factories não distingue arquivos padrão de arquivos criados por você.
+
+</details>
+
+### 3. Crie um módulo de negócio
+
 ```bash
-php artisan make:module NomeDoModulo --table=nome_tabela
+php artisan make:module Produto --table=produtos
 ```
-Pronto! Toda a estrutura será criada e já estará funcional no banco de dados.
+
+O exemplo cria `app/Http/Modules/Produto` e uma migration para a tabela `produtos`.
+
+Você também pode informar apenas o nome:
+
+```bash
+php artisan make:module Produto
+```
+
+Nesse caso, o comando pergunta se o módulo será vinculado a uma tabela e qual será o nome dela. Se você optar por não vincular uma tabela, nenhuma migration será gerada; ajuste os placeholders de tabela antes de usar a persistência.
+
+> [!IMPORTANT]
+> O gerador cria uma estrutura inicial. Antes de expor os endpoints, configure as rotas, a autorização, as regras dos requests e os campos do domínio. Se o módulo já existir e você confirmar a sobrescrita, sua pasta será excluída e recriada.
+
+### 4. Adapte e conecte à aplicação
+
+- Defina as colunas da migration, os casts do model e as regras de validação.
+- Implemente as regras de negócio no service e ajuste a persistência no repository.
+- Registre as rotas no arquivo de rotas da sua aplicação.
+- Revise a migration e aplique-a ao banco configurado.
+
+Por exemplo, em `routes/api.php`, caso esse arquivo esteja configurado na aplicação:
+
+```php
+use App\Http\Modules\Produto\Controllers\ProdutoController;
+use Illuminate\Support\Facades\Route;
+
+Route::apiResource('produtos', ProdutoController::class);
+```
+
+Depois de ajustar a migration:
+
+```bash
+php artisan migrate
+```
+
+<a id="arquitetura" name="arquitetura"></a>
+
+## Como as camadas se conectam
+
+<p align="center">
+  <img src="docs/kaizendev/assets/kaizendev-architecture-pt.svg" alt="Fluxo das camadas: Requisição HTTP → FormRequest → Controller → Service → Repository → Model Eloquent → Banco de dados" width="520" height="320">
+</p>
+
+| Camada | Responsabilidade |
+| --- | --- |
+| **Request** | Autorizar e validar a entrada conforme as regras que você definir. |
+| **Controller** | Receber a requisição, chamar o service e construir a resposta. |
+| **Service** | Organizar as regras de negócio e coordenar operações. |
+| **Repository** | Concentrar as consultas e operações de persistência. |
+| **Model** | Representar a tabela e configurar casts, relações e comportamento Eloquent. |
+
+O `ModuleServiceProvider` percorre `app/Http/Modules` e registra os providers que seguem os nomes `{Modulo}ServiceProvider` e `{Modulo}RepositoryProvider`. Também carrega as migrations e configura a resolução das factories dos módulos.
+
+> [!TIP]
+> Use nomes de módulos que representem o negócio, como `Produto`, `Pedido` ou `Cliente`. Mantenha as convenções geradas para que os providers sejam descobertos automaticamente.
+
+<details>
+<summary><strong>Veja a estrutura gerada para o módulo Produto</strong></summary>
+
+```text
+app/Http/Modules/
+├── Base/
+└── Produto/
+    ├── Controllers/
+    │   └── ProdutoController.php
+    ├── Models/
+    │   └── Produto.php
+    ├── Providers/
+    │   ├── ProdutoRepositoryProvider.php
+    │   └── ProdutoServiceProvider.php
+    ├── Repositories/
+    │   ├── Interfaces/ProdutoRepositoryInterface.php
+    │   └── ProdutoRepositoryEloquent.php
+    ├── Services/
+    │   ├── Interfaces/ProdutoServiceInterface.php
+    │   └── ProdutoService.php
+    ├── Requests/
+    │   ├── IndexRequest.php
+    │   ├── StoreRequest.php
+    │   └── UpdateRequest.php
+    ├── Resources/ProdutoResource.php
+    ├── Traits/ProdutoTrait.php
+    ├── Jobs/ProdutoJob.php
+    ├── Migrations/
+    │   └── {data}_create_produtos_table.php
+    ├── Seeders/ProdutoSeeder.php
+    ├── Factories/ProdutoFactory.php
+    └── Exports/ProdutoExport.php
+```
+
+A migration é criada quando uma tabela é informada. Jobs, resources, factories e seeders incluem estruturas iniciais para você implementar. O export gerado utiliza interfaces do `maatwebsite/excel`; essa dependência precisa estar instalada na aplicação se você usar a classe de exportação.
+
+</details>
+
+<details>
+<summary><strong>Perguntas frequentes</strong></summary>
+
+### O pacote registra minhas rotas automaticamente?
+
+Não. O provider registra os providers dos módulos, carrega migrations e configura a resolução de factories. As rotas devem ser definidas na aplicação.
+
+### Criar o módulo já cria a tabela no banco?
+
+Não. O comando gera o arquivo de migration quando há uma tabela informada. Revise as colunas e execute `php artisan migrate` para aplicar as migrations pendentes.
+
+### Como funciona a atribuição em massa no BaseModel?
+
+Por padrão, o `BaseModel` protege `id`, `created_at`, `updated_at` e `deleted_at` com `$guarded`. As demais colunas podem receber atribuição em massa. Revise os campos permitidos para cada operação; os helpers `addGuarded()`, `addFillable()` e `removeGuarded()` estão disponíveis nas instâncias do model.
+
+### Atualizar o pacote atualiza os arquivos publicados?
+
+A atualização via Composer altera o pacote, não os arquivos já copiados para a aplicação. Compare as mudanças antes de incorporá-las. Executar o instalador novamente pode sobrescrever seus arquivos base.
+
+### A escolha de idioma também traduz o gerador?
+
+A seleção define o idioma dos stubs publicados pelo instalador. As mensagens e os templates do `make:module` permanecem conforme implementados no comando, atualmente em português.
+
+</details>
+
+<a id="contato" name="contato"></a>
+
+## Dúvidas, sugestões e contribuições
+
+Encontrou um problema ou tem uma ideia para melhorar o pacote? Abra uma [issue no repositório do pacote](https://github.com/KaizenDevBr/laravel-modular-api/issues) com o contexto, as versões de PHP e Laravel e, quando possível, um exemplo que permita reproduzir o comportamento.
+
+Para contribuir com código ou documentação, envie um [pull request](https://github.com/KaizenDevBr/laravel-modular-api/pulls) explicando o problema e a mudança proposta.
+
+- **E-mail para dúvidas e sugestões:** [contato@kaizen.dev.br](mailto:contato@kaizen.dev.br)
+- **Site da KAIZENDEV:** [kaizen.dev.br](https://kaizen.dev.br)
+
+## Licença
+
+Este pacote declara a licença **MIT** em [composer.json](https://github.com/KaizenDevBr/laravel-modular-api/blob/main/composer.json).
 
 ---
 
-## ❓ Perguntas Frequentes (FAQ)
-
-**P: Eu preciso atualizar este pacote com frequência?**
-*R: Não! O pacote lida com a geração estrutural de arquivos padrão do Laravel. Ele foi projetado para ser incrivelmente estável, exigindo atualização apenas em grandes transições de versões do PHP ou Laravel.*
-
-**P: Como faço exceções de "fillables" no banco?**
-*R: O `BaseModel` trabalha com "Autoload de Fillables" por padrão, protegendo as colunas vitais de ID e Data, liberando o resto. Caso precise alterar, use as funções auxiliares dinâmicas como `$this->addFillable()` ou `$this->addGuarded()` diretamente na sua Controller ou Service.*
-
----
-
-## 👨‍💻 Sobre o Desenvolvedor
-
-Esta arquitetura foi meticulosamente desenhada para escalar. Se você está usando este pacote, você está pronto para construir APIs que suportam milhares de requisições de forma limpa e manutenível.
-
-*Desenvolvido com excelência por:*  
-**Wanderson Borges** | [KaizenDev](https://kaizen.dev.br)
-
-> "A melhoria contínua é melhor que a perfeição adiada." - *Kaizen*
+<div align="center">
+  <p>
+    Desenvolvido por:<br>
+    <strong>Wanderson Borges | KAIZENDEV</strong><br>
+    <a href="https://kaizen.dev.br">kaizen.dev.br</a> ·
+    <a href="mailto:contato@kaizen.dev.br">contato@kaizen.dev.br</a>
+  </p>
+  <p><em>Construir. Aprender. Melhorar.</em></p>
+</div>

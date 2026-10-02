@@ -62,12 +62,26 @@ class InstallCommand extends Command
     }
 
     /**
-     * Copia o arquivo de documentação para a raiz do projeto.
+     * Copia a documentação para a raiz do projeto e suas imagens para docs/kaizendev/assets.
      */
     private function publishDocumentation(): void
     {
         $stubPath = __DIR__ . "/../../stubs/{$this->locale}/KAIZENDEV.stub";
         $destinationPath = base_path('KAIZENDEV.md');
+
+        $assetsPath = __DIR__ . '/../../docs/assets';
+        $assetsDestinationPath = base_path('docs/kaizendev/assets');
+        $assets = $this->locale === 'pt_BR'
+            ? ['kaizendev-banner.svg', 'kaizendev-architecture-pt.svg']
+            : ['kaizendev-banner-en.svg', 'kaizendev-architecture-en.svg'];
+
+        if (!File::isDirectory($assetsDestinationPath)) {
+            File::makeDirectory($assetsDestinationPath, 0755, true);
+        }
+
+        foreach ($assets as $asset) {
+            File::copy($assetsPath . '/' . $asset, $assetsDestinationPath . '/' . $asset);
+        }
 
         File::copy($stubPath, $destinationPath);
         $this->info($this->locale === 'pt_BR' 
