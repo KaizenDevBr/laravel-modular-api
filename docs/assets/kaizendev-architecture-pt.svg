@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="320" viewBox="0 0 520 320" role="img" aria-labelledby="title description">
+  <title id="title">Como as camadas se conectam</title>
+  <desc id="description">Requisição HTTP → FormRequest → Controller → Service / Interface → Repository / Interface → Model Eloquent → Banco de dados</desc>
+  <rect x="70" y="12" width="380" height="32" rx="8" fill="#0F2746" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="260" y="34" text-anchor="middle" fill="#FFFFFF" font-family="DejaVu Sans, Arial, sans-serif" font-size="16">Requisição HTTP</text>
+  <path d="M260 44V48" fill="none" stroke="#3B82F6" stroke-width="2"/>
+  <path d="M256 48L260 53L264 48Z" fill="#3B82F6"/>
+  <rect x="70" y="55" width="380" height="32" rx="8" fill="#0F2746" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="260" y="77" text-anchor="middle" fill="#FFFFFF" font-family="DejaVu Sans, Arial, sans-serif" font-size="16">FormRequest</text>
+  <path d="M260 87V91" fill="none" stroke="#3B82F6" stroke-width="2"/>
+  <path d="M256 91L260 96L264 91Z" fill="#3B82F6"/>
+  <rect x="70" y="98" width="380" height="32" rx="8" fill="#0F2746" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="260" y="120" text-anchor="middle" fill="#FFFFFF" font-family="DejaVu Sans, Arial, sans-serif" font-size="16">Controller</text>
+  <path d="M260 130V134" fill="none" stroke="#3B82F6" stroke-width="2"/>
+  <path d="M256 134L260 139L264 134Z" fill="#3B82F6"/>
+  <rect x="70" y="141" width="380" height="32" rx="8" fill="#0F2746" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="260" y="163" text-anchor="middle" fill="#FFFFFF" font-family="DejaVu Sans, Arial, sans-serif" font-size="16">Service / Interface</text>
+  <path d="M260 173V177" fill="none" stroke="#3B82F6" stroke-width="2"/>
+  <path d="M256 177L260 182L264 177Z" fill="#3B82F6"/>
+  <rect x="70" y="184" width="380" height="32" rx="8" fill="#0F2746" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="260" y="206" text-anchor="middle" fill="#FFFFFF" font-family="DejaVu Sans, Arial, sans-serif" font-size="16">Repository / Interface</text>
+  <path d="M260 216V220" fill="none" stroke="#3B82F6" stroke-width="2"/>
+  <path d="M256 220L260 225L264 220Z" fill="#3B82F6"/>
+  <rect x="70" y="227" width="380" height="32" rx="8" fill="#0F2746" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="260" y="249" text-anchor="middle" fill="#FFFFFF" font-family="DejaVu Sans, Arial, sans-serif" font-size="16">Model Eloquent</text>
+  <path d="M260 259V263" fill="none" stroke="#3B82F6" stroke-width="2"/>
+  <path d="M256 263L260 268L264 263Z" fill="#3B82F6"/>
+  <rect x="70" y="270" width="380" height="32" rx="8" fill="#0F2746" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="260" y="292" text-anchor="middle" fill="#FFFFFF" font-family="DejaVu Sans, Arial, sans-serif" font-size="16">Banco de dados</text>
+</svg>
