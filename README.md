@@ -13,6 +13,7 @@
   <p>Monolito modular · Geração de código · Convenções compartilhadas</p>
 
   <p>
+    <a href="https://github.com/KaizenDevBr/laravel-modular-api"><img src="https://img.shields.io/badge/GitHub-KaizenDevBr%2Flaravel--modular--api-181717?style=for-the-badge&amp;logo=github" alt="GitHub Repository"></a>
     <img src="https://img.shields.io/badge/Laravel-11%20%7C%2012%20%7C%2013-FF2D20?style=for-the-badge&amp;logo=laravel" alt="Laravel 11, 12 e 13">
     <img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&amp;logo=php&amp;logoColor=white" alt="PHP 8.2 ou superior">
     <img src="https://img.shields.io/badge/Licen%C3%A7a-MIT-2EA44F?style=for-the-badge" alt="Licença MIT">
@@ -252,6 +253,13 @@ Este pacote declara a licença **MIT** em [composer.json](composer.json).
     <img src="docs/assets/kaizendev-banner-en.svg" alt="KaizenDev Modular API — An organized foundation for building and evolving Laravel APIs" width="800">
   </a>
   <p>Modular monolith · Code generation · Shared conventions</p>
+
+  <p>
+    <a href="https://github.com/KaizenDevBr/laravel-modular-api"><img src="https://img.shields.io/badge/GitHub-KaizenDevBr%2Flaravel--modular--api-181717?style=for-the-badge&amp;logo=github" alt="GitHub Repository"></a>
+    <img src="https://img.shields.io/badge/Laravel-11%20%7C%2012%20%7C%2013-FF2D20?style=for-the-badge&amp;logo=laravel" alt="Laravel 11, 12 and 13">
+    <img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&amp;logo=php&amp;logoColor=white" alt="PHP 8.2 or higher">
+    <img src="https://img.shields.io/badge/License-MIT-2EA44F?style=for-the-badge" alt="MIT License">
+  </p>
 
   <p>
     <a href="#installation">Installation</a> ·
