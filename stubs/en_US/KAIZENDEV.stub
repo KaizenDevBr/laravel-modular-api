@@ -12,6 +12,7 @@
   <p>Modular monolith · Code generation · Shared conventions</p>
 
   <p>
+    <a href="https://github.com/KaizenDevBr/laravel-modular-api"><img src="https://img.shields.io/badge/GitHub-KaizenDevBr%2Flaravel--modular--api-181717?style=for-the-badge&amp;logo=github" alt="GitHub Repository"></a>
     <img src="https://img.shields.io/badge/Laravel-11%20%7C%2012%20%7C%2013-FF2D20?style=for-the-badge&amp;logo=laravel" alt="Laravel 11, 12 and 13">
     <img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&amp;logo=php&amp;logoColor=white" alt="PHP 8.2 or later">
     <img src="https://img.shields.io/badge/License-MIT-2EA44F?style=for-the-badge" alt="MIT license">
